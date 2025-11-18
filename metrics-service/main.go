@@ -13,16 +13,16 @@ import (
 )
 
 type Metric struct {
-	Timestamp string `json:"timestamp" bson:"timestamp"`
-	GPUID string `json:"gpu_id" bson:"gpu_id"`
-	GPUType string `json:"gpu_type" bson:"gpu_type"`
-	Model string `json:"model" bson:"model"`
-	Utilization int `json:"utilization" bson:"memory_used"`
-	MemoryTotal int `json:"memory_total" bson:"memory_total"`
-	Temperature int `json:"temperature" bson:"temperature"`
-	PowerDraw float64 `json:"power_draw" bson:"power_draw"`
+    Timestamp    string  `json:"timestamp" bson:"timestamp"`
+    GPUID        string  `json:"gpu_id" bson:"gpu_id"`
+    GPUType      string  `json:"gpu_type" bson:"gpu_type"`
+    Model        string  `json:"model" bson:"model"`
+    Utilization  int     `json:"utilization" bson:"utilization"`
+    MemoryUsed   int     `json:"memory_used" bson:"memory_used"`
+    MemoryTotal  int     `json:"memory_total" bson:"memory_total"`
+    Temperature  int     `json:"temperature" bson:"temperature"`
+    PowerDraw    float64 `json:"power_draw" bson:"power_draw"`
 }
-
 
 var metricsCollection *mongo.Collection
 
