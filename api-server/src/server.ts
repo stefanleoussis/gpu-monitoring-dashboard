@@ -9,7 +9,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
 let db: Db;
 
 async function connectDB() {
@@ -42,16 +49,34 @@ app.get("/api/metrics/current", async (req: Request, res: Response) => {
 
 app.get("/api/metrics/history", async (req: Request, res: Response) => {
   try {
-    const limit = parseInt(req.query.limit as string) || 100;
+    const range = (req.query.range as string) || "1h";
+
+    const now = new Date();
+    let cutoffTime: Date;
+
+    switch (range) {
+      case "1h":
+        cutoffTime = new Date(now.getTime() - 60 * 60 * 1000);
+        break;
+      case "24h":
+        cutoffTime = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        break;
+      case "7d":
+        cutoffTime = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        break;
+      default:
+        cutoffTime = new Date(now.getTime() - 60 * 60 * 1000);
+    }
 
     const history = await db
       .collection("metrics")
-      .find()
-      .sort({ timestamp: -1 })
-      .limit(limit)
+      .find({
+        timestamp: { $gte: cutoffTime.toISOString() },
+      })
+      .sort({ timestamp: 1 })
       .toArray();
 
-    res.json(history.reverse());
+    res.json(history);
   } catch (error) {
     console.error("Error fetching history:", error);
     res.status(500).json({ error: "Failed to fetch history" });
