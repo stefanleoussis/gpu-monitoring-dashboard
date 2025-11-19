@@ -12,7 +12,7 @@ export interface GPUMetric {
 }
 
 export interface WorkloadStatus {
-  status: "idle" | "running";
+  status: 'never_started' | 'running' | 'stopped';
   pid?: number;
   started_at?: string;
 }
