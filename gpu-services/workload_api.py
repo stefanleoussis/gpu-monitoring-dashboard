@@ -20,7 +20,7 @@ def start_workload():
     )
     
     return jsonify({
-        "status": "started",
+        "status": "running",
         "pid": current_process.pid
     })
 
