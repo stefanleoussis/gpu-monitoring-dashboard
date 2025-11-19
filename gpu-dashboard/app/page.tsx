@@ -9,7 +9,7 @@ import {
     TabsTrigger,
 } from '@/components/animate-ui/components/radix/tabs';
 
-import Client from '@/components/dashboard/Client';
+import Client from '@/components/Client';
 
 const metric = {
     _id: '1234',

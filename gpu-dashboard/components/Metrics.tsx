@@ -1,14 +1,15 @@
 'use client';
+
 import { GPUMetric, WorkloadStatus } from '@/lib/types';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
+import { Badge } from './ui/badge';
 import { useEffect, useState } from 'react';
 import { getMetricsHistory, startWorkload, stopWorkload } from '@/lib/api';
 import { Dot, Pause, Play } from 'lucide-react';
-import { LiquidButton } from '../animate-ui/components/buttons/liquid';
-import { UtilLineChart } from '../UtilLineChart';
-import { TempAreaChart } from '../TempAreaChart';
-import { MemoryDonutChart } from '../MemoryDonutChart';
+import { LiquidButton } from './animate-ui/components/buttons/liquid';
+import { UtilLineChart } from './UtilLineChart';
+import { TempAreaChart } from './TempAreaChart';
+import { MemoryDonutChart } from './MemoryDonutChart';
+import { SparkAreaChart } from './SparkChart';
 
 interface Props {
     metric: GPUMetric;
@@ -118,7 +119,15 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-emerald-400'>+1.8%</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525]'>Chart</div>
+                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                            <SparkAreaChart
+                                data={history}
+                                categories={['utilization']}
+                                index='timestamp'
+                                colors={['blue']}
+                                className='h-20 w-30'
+                            />
+                        </div>
                     </div>
                     <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
                         <div>
@@ -130,7 +139,18 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-gray-400'>/ 24 GB</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525]'>Chart</div>
+                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                            <SparkAreaChart
+                                data={history.map(m => ({
+                                    ...m,
+                                    memory_percent: (m.memory_used / m.memory_total) * 100,
+                                }))}
+                                categories={['memory_percent']}
+                                index='timestamp'
+                                colors={['cyan']}
+                                className='h-20 w-30'
+                            />
+                        </div>
                     </div>
                     <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
                         <div>
@@ -140,7 +160,15 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-emerald-400'>+1.8%</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525]'>Chart</div>
+                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                            <SparkAreaChart
+                                data={history}
+                                categories={['temperature']}
+                                index='timestamp'
+                                colors={['pink']}
+                                className='h-20 w-30'
+                            />
+                        </div>
                     </div>
                     <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
                         <div>
@@ -150,7 +178,15 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-gray-400'>/ 450 W</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525]'>Chart</div>
+                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                            <SparkAreaChart
+                                data={history}
+                                categories={['power_draw']}
+                                index='timestamp'
+                                colors={['violet']}
+                                className='h-20 w-30'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
