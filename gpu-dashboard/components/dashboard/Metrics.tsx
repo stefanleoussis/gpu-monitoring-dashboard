@@ -7,6 +7,8 @@ import { getMetricsHistory, startWorkload, stopWorkload } from '@/lib/api';
 import { Dot, Pause, Play } from 'lucide-react';
 import { LiquidButton } from '../animate-ui/components/buttons/liquid';
 import { UtilLineChart } from '../UtilLineChart';
+import { TempAreaChart } from '../TempAreaChart';
+import { MemoryDonutChart } from '../MemoryDonutChart';
 
 interface Props {
     metric: GPUMetric;
@@ -202,24 +204,59 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                     </div>
                 </div>
             </div>
-            <div className='h-2xl mt-8 w-2 rounded-md border bg-[#1A1A1A] p-6'>
+            <div className='h-4xl mt-8 w-4xl rounded-md border bg-[#1A1A1A] p-6'>
                 <div className='text-xl text-cyan-400'>Memory Breakdown:</div>
+                <MemoryDonutChart metric={metric} />
             </div>
-            <div className='h-2xl mt-8 flex w-4xl flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
+            <div className='mt-8 flex w-4xl flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
                 <div className='text-xl text-cyan-400'>GPU Temperature Trend:</div>
                 <div className='text-sm text-gray-400'>Last hour data with real-time updates</div>
                 <div className='mt-4 flex gap-4'>
-                    <div className='flex w-10 items-center justify-center rounded-xs border border-indigo-500 bg-indigo-500/10 text-xs text-indigo-500'>
-                        1 M
-                    </div>
-                    <div className='flex w-10 items-center justify-center rounded-xs border border-indigo-500 bg-indigo-500/10 text-xs text-indigo-500'>
-                        1 D
-                    </div>
-                    <div className='flex w-11 items-center justify-center rounded-xs border border-indigo-500 bg-indigo-500 text-xs text-indigo-300'>
-                        1 HR
+                    <button
+                        className='p-0 text-xs hover:text-white'
+                        onClick={() => setSelectedRange('1h')}
+                    >
+                        <Badge
+                            className='h-8'
+                            variant={selectedRange === '1h' ? 'success' : 'default'}
+                        >
+                            1 H
+                        </Badge>
+                    </button>
+                    <button
+                        className='p-0 text-xs hover:text-white'
+                        onClick={() => setSelectedRange('24h')}
+                    >
+                        <Badge
+                            className='h-8'
+                            variant={selectedRange === '24h' ? 'success' : 'default'}
+                        >
+                            1 D
+                        </Badge>
+                    </button>
+                    <button
+                        className='p-0 text-xs hover:text-white'
+                        onClick={() => setSelectedRange('7d')}
+                    >
+                        <Badge
+                            className='h-8'
+                            variant={selectedRange === '7d' ? 'success' : 'default'}
+                        >
+                            1 W
+                        </Badge>
+                    </button>
+                </div>
+                <div className='mt-2 h-100 w-full rounded-md border bg-black'>
+                    <div className='h-full w-full p-4'>
+                        {isLoadingHistory ? (
+                            <div className='flex h-full items-center justify-center text-gray-400'>
+                                Loading...
+                            </div>
+                        ) : (
+                            <TempAreaChart data={history} timeRange={selectedRange} />
+                        )}
                     </div>
                 </div>
-                <div className='mt-2 h-60 w-full rounded-md border bg-[#252525]'></div>
             </div>
         </>
     );

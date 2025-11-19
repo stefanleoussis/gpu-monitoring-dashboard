@@ -2,7 +2,7 @@
 
 import { TooltipProps } from './LineChart';
 
-export function LineChartTooltip({ active, payload, label }: TooltipProps) {
+export function ChartTooltip({ active, payload, label }: TooltipProps) {
     if (!active || !payload || payload.length === 0 || !label) return null;
 
     const data = payload[0].payload;

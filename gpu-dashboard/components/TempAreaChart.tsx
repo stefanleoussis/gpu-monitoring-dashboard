@@ -1,16 +1,15 @@
 'use client';
 
-import { LineChart } from './LineChart';
-
+import { AreaChart } from './AreaChart';
 import { ChartTooltip } from './ChartTooltip';
 import { GPUMetric } from '@/lib/types';
 
-interface UtilLineChartProps {
+interface TempAreaChartProps {
     data: GPUMetric[];
     timeRange: '1h' | '24h' | '7d';
 }
 
-export function UtilLineChart({ data, timeRange }: UtilLineChartProps) {
+export function TempAreaChart({ data, timeRange }: TempAreaChartProps) {
     const formatXAxis = (timestamp: string) => {
         const date = new Date(timestamp);
 
@@ -34,12 +33,12 @@ export function UtilLineChart({ data, timeRange }: UtilLineChartProps) {
 
     return (
         <div className='mb-8'>
-            <LineChart
+            <AreaChart
                 className='h-80 w-full select-none'
                 data={data}
                 index='timestamp'
-                categories={['utilization']}
-                colors={['blue']}
+                categories={['temperature']}
+                colors={['pink']}
                 customTooltip={ChartTooltip}
                 yAxisWidth={40}
                 xAxisFormatter={formatXAxis}
