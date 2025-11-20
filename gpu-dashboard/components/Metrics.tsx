@@ -45,13 +45,11 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
     const handleWorkloadToggle = async () => {
         setIsLoading(true);
         try {
-            console.log(workloadStatus.status);
             if (workloadStatus.status === 'running') {
                 const result = await stopWorkload();
                 setWorkloadStatus(result);
             } else {
                 const result = await startWorkload();
-                console.log(result);
                 setWorkloadStatus(result);
             }
         } catch (error) {
