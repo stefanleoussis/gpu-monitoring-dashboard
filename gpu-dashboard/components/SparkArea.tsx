@@ -23,7 +23,6 @@ export function TempAreaChart({ data, dataKey, color = '#22D3EE' }: SparkAreaPro
                 colors={['pink']}
                 customTooltip={ChartTooltip}
                 yAxisWidth={40}
-                xAxisFormatter={formatXAxis}
             />
         </div>
     );
