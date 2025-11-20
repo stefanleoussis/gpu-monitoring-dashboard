@@ -578,7 +578,7 @@ const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>((props, ref) 
             tremor-id='tremor-raw'
             {...other}
         >
-            <ResponsiveContainer>
+            <ResponsiveContainer height={350} minWidth={0}>
                 <RechartsLineChart
                     data={data}
                     onClick={

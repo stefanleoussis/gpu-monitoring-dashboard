@@ -120,7 +120,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-5xl font-bold'>{metric.utilization}%</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['utilization']}
@@ -143,7 +143,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-gray-400'>/ 24 GB</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history.map(m => ({
                                     ...m,
@@ -165,7 +165,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-5xl font-bold'>{metric.temperature}°C</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['temperature']}
@@ -187,7 +187,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-gray-400'>/ 450 W</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['power_draw']}

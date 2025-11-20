@@ -218,7 +218,7 @@ const DonutChart = React.forwardRef<HTMLDivElement, DonutChartProps>(
                 tremor-id='tremor-raw'
                 {...other}
             >
-                <ResponsiveContainer className='size-full'>
+                <ResponsiveContainer height={160} minWidth={0} className='size-full'>
                     <ReChartsDonutChart
                         onClick={
                             onValueChange && activeIndex !== undefined

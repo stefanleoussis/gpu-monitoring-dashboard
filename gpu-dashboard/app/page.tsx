@@ -40,14 +40,6 @@ export default async function Dashboard() {
                     className='rounded-full border p-3'
                 />
             </div>
-            <Tabs className='mt-5 w-full justify-start'>
-                <TabsList>
-                    <TabsTrigger value='account'>Nvidia</TabsTrigger>
-                    <TabsTrigger value='password' className='text-cyan-300 focus:text-cyan-300'>
-                        AMD
-                    </TabsTrigger>
-                </TabsList>
-            </Tabs>
             <Client initialWorkloadStatus={initialWorkloadStatus} initialMetric={initialMetric} />
         </div>
     );

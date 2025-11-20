@@ -88,7 +88,7 @@ const SparkAreaChart = React.forwardRef<HTMLDivElement, SparkAreaChartProps>(
                 tremor-id='tremor-raw'
                 {...other}
             >
-                <ResponsiveContainer>
+                <ResponsiveContainer height={100} width={120}>
                     <RechartsAreaChart
                         data={data}
                         margin={{
