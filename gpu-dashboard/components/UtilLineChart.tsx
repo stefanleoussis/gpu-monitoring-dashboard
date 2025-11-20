@@ -43,6 +43,8 @@ export function UtilLineChart({ data, timeRange }: UtilLineChartProps) {
                 customTooltip={ChartTooltip}
                 yAxisWidth={40}
                 xAxisFormatter={formatXAxis}
+                tickGap={30}
+                legendPosition='left'
             />
         </div>
     );

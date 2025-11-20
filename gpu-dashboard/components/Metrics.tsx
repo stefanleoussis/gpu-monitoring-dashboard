@@ -62,64 +62,65 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
 
     return (
         <>
-            <div className='mt-8 flex gap-8'>
-                <div className='flex h-80 w-105 flex-col justify-between rounded-md border bg-[#1A1A1A] p-6'>
-                    <div>
-                        <div className='flex justify-between gap-4'>
-                            <div className='text-2xl text-cyan-400'>Status:</div>
-                            <Badge
-                                variant={
-                                    workloadStatus.status === 'running' ? 'success' : 'default'
-                                }
+            <div className='mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 md:grid-rows-4 lg:grid-cols-[370px_1fr_1fr] lg:grid-rows-2'>
+                <div className='row-span-2 grid'>
+                    <div className='flex h-80 w-full flex-col justify-between rounded-md border bg-[#1A1A1A] p-6'>
+                        <div>
+                            <div className='flex justify-between gap-4'>
+                                <div className='text-2xl text-cyan-400'>Status:</div>
+                                <Badge
+                                    variant={
+                                        workloadStatus.status === 'running' ? 'success' : 'default'
+                                    }
+                                >
+                                    {workloadStatus.status === 'running' ? (
+                                        <div className='flex items-center justify-center pl-2'>
+                                            Running <Dot className='m-0' />
+                                        </div>
+                                    ) : (
+                                        <div className='flex items-center gap-1'>
+                                            Paused <Pause size={11} />
+                                        </div>
+                                    )}
+                                </Badge>
+                            </div>
+                            <div className='mt-16 text-gray-400'>
+                                GPU Type: <span className='text-cyan-400'>{metric.gpu_type}</span>
+                            </div>
+                            <div className='mt-2 text-gray-400'>
+                                Model: <span className='text-cyan-400'>{metric.model}</span>
+                            </div>
+                        </div>
+                        <div className='flex justify-end'>
+                            <LiquidButton
+                                variant={workloadStatus.status === 'running' ? 'pause' : 'default'}
+                                onClick={handleWorkloadToggle}
+                                disabled={isLoading}
                             >
-                                {workloadStatus.status === 'running' ? (
-                                    <div className='flex items-center justify-center pl-2'>
-                                        Running <Dot className='m-0' />
+                                {isLoading ? (
+                                    'Loading...'
+                                ) : workloadStatus.status === 'running' ? (
+                                    <div className='flex items-center gap-2'>
+                                        Pause Workload <Pause />
                                     </div>
                                 ) : (
-                                    <div className='flex items-center gap-1'>
-                                        Paused <Pause size={11} />
+                                    <div className='flex items-center gap-2'>
+                                        Start Workload <Play />
                                     </div>
                                 )}
-                            </Badge>
+                            </LiquidButton>
                         </div>
-                        <div className='mt-6 text-gray-400'>
-                            GPU Type: <span className='text-cyan-400'>{metric.gpu_type}</span>
-                        </div>
-                        <div className='mt-2 text-gray-400'>
-                            Model: <span className='text-cyan-400'>{metric.model}</span>
-                        </div>
-                    </div>
-                    <div className='flex justify-end'>
-                        <LiquidButton
-                            variant={workloadStatus.status === 'running' ? 'pause' : 'default'}
-                            onClick={handleWorkloadToggle}
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                'Loading...'
-                            ) : workloadStatus.status === 'running' ? (
-                                <div className='flex items-center gap-2'>
-                                    Pause Workload <Pause />
-                                </div>
-                            ) : (
-                                <div className='flex items-center gap-2'>
-                                    Start Workload <Play />
-                                </div>
-                            )}
-                        </LiquidButton>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-8'>
-                    <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
+                <div className='row-span-1 grid'>
+                    <div className='flex h-36 w-full justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8 md:min-w-[310px]'>
                         <div>
                             <div className='text-xl text-cyan-400'>Utilization:</div>
                             <div className='mt-3 flex items-baseline gap-2'>
                                 <div className='text-5xl font-bold'>{metric.utilization}%</div>
-                                <div className='text-emerald-400'>+1.8%</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['utilization']}
@@ -129,9 +130,12 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                             />
                         </div>
                     </div>
-                    <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
+                </div>
+                <div className='row-span-1 grid md:col-span-2 md:col-start-1 md:row-start-3 lg:col-start-3 lg:row-start-1'>
+                    <div className='flex h-36 w-full justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8 md:min-w-[420px]'>
                         <div>
                             <div className='text-xl text-cyan-400'>Memory Usage:</div>
+
                             <div className='mt-3 flex items-baseline gap-2'>
                                 <div className='text-5xl font-bold'>
                                     {(metric.memory_used / 1024).toFixed(1)}
@@ -139,7 +143,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-gray-400'>/ 24 GB</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history.map(m => ({
                                     ...m,
@@ -152,15 +156,16 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                             />
                         </div>
                     </div>
-                    <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
+                </div>
+                <div className='grid md:col-start-2 md:row-start-2 lg:row-span-1'>
+                    <div className='flex h-36 w-full justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8 md:min-w-[310px]'>
                         <div>
                             <div className='text-xl text-cyan-400'>Temperature:</div>
                             <div className='mt-3 flex items-baseline gap-2'>
                                 <div className='text-5xl font-bold'>{metric.temperature}°C</div>
-                                <div className='text-emerald-400'>+1.8%</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['temperature']}
@@ -170,15 +175,19 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                             />
                         </div>
                     </div>
-                    <div className='flex h-36 w-100 justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8'>
+                </div>
+                <div className='row-span-1 grid md:col-span-2 md:col-start-1 md:row-start-4 lg:col-start-3 lg:row-start-2'>
+                    <div className='flex h-36 w-full justify-between rounded-md border bg-[#1A1A1A] px-6 pt-6 pb-8 md:min-w-[420px]'>
                         <div>
                             <div className='text-xl text-cyan-400'>Power Draw:</div>
                             <div className='mt-3 flex items-baseline gap-2'>
-                                <div className='text-5xl font-bold'>{metric.power_draw}</div>
+                                <div className='text-3xl font-bold md:text-5xl'>
+                                    {metric.power_draw}
+                                </div>
                                 <div className='text-gray-400'>/ 450 W</div>
                             </div>
                         </div>
-                        <div className='mt-2 h-20 w-30 rounded-md border bg-[#252525] shadow-2xl'>
+                        <div className='mt-2 hidden h-20 w-30 rounded-md border bg-[#252525] shadow-2xl md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['power_draw']}
@@ -190,61 +199,71 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                     </div>
                 </div>
             </div>
-            <div className='mt-8 flex w-4xl flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
-                <div className='text-xl text-cyan-400'>GPU Utilization Trend:</div>
-                <div className='text-sm text-gray-400'>Last hour data with real-time updates</div>
-                <div className='mt-4 flex gap-4'>
-                    <button
-                        className='p-0 text-xs hover:text-white'
-                        onClick={() => setSelectedRange('1h')}
-                    >
-                        <Badge
-                            className='h-8'
-                            variant={selectedRange === '1h' ? 'success' : 'default'}
+            <div className='mt-8 grid gap-8 md:grid-cols-1 lg:grid-cols-[1fr_400px]'>
+                <div className='flex w-full flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
+                    <div className='text-xl text-cyan-400'>GPU Utilization Trend:</div>
+                    <div className='text-sm text-gray-400'>
+                        Last hour data with real-time updates
+                    </div>
+                    <div className='mt-4 flex gap-4'>
+                        <button
+                            className='p-0 text-xs hover:text-white'
+                            onClick={() => setSelectedRange('1h')}
                         >
-                            1 H
-                        </Badge>
-                    </button>
-                    <button
-                        className='p-0 text-xs hover:text-white'
-                        onClick={() => setSelectedRange('24h')}
-                    >
-                        <Badge
-                            className='h-8'
-                            variant={selectedRange === '24h' ? 'success' : 'default'}
+                            <Badge
+                                className='h-8'
+                                variant={selectedRange === '1h' ? 'success' : 'default'}
+                            >
+                                1 H
+                            </Badge>
+                        </button>
+                        <button
+                            className='p-0 text-xs hover:text-white'
+                            onClick={() => setSelectedRange('24h')}
                         >
-                            1 D
-                        </Badge>
-                    </button>
-                    <button
-                        className='p-0 text-xs hover:text-white'
-                        onClick={() => setSelectedRange('7d')}
-                    >
-                        <Badge
-                            className='h-8'
-                            variant={selectedRange === '7d' ? 'success' : 'default'}
+                            <Badge
+                                className='h-8'
+                                variant={selectedRange === '24h' ? 'success' : 'default'}
+                            >
+                                1 D
+                            </Badge>
+                        </button>
+                        <button
+                            className='p-0 text-xs hover:text-white'
+                            onClick={() => setSelectedRange('7d')}
                         >
-                            1 W
-                        </Badge>
-                    </button>
-                </div>
-                <div className='mt-2 h-100 w-full rounded-md border bg-black'>
-                    <div className='h-full w-full p-4'>
-                        {isLoadingHistory ? (
-                            <div className='flex h-full items-center justify-center text-gray-400'>
-                                Loading...
-                            </div>
-                        ) : (
-                            <UtilLineChart data={history} timeRange={selectedRange} />
-                        )}
+                            <Badge
+                                className='h-8'
+                                variant={selectedRange === '7d' ? 'success' : 'default'}
+                            >
+                                1 W
+                            </Badge>
+                        </button>
+                    </div>
+                    <div className='mt-2 h-100 w-full rounded-md border bg-black'>
+                        <div className='h-full w-full p-4'>
+                            {isLoadingHistory ? (
+                                <div className='flex h-full items-center justify-center text-gray-400'>
+                                    Loading...
+                                </div>
+                            ) : (
+                                <UtilLineChart data={history} timeRange={selectedRange} />
+                            )}
+                        </div>
                     </div>
                 </div>
+                <div className='flex w-full flex-col justify-between gap-8 rounded-md border bg-[#1A1A1A] p-6'>
+                    <div>
+                        <div className='text-xl text-cyan-400'>Memory Breakdown:</div>
+                        <div className='mt-2 text-sm text-gray-400'>VRAM Memory Usage graphed</div>
+                    </div>
+                    <div className='flex h-80 w-full items-center justify-center rounded-lg border bg-[#252525]/5 shadow-lg backdrop-blur-md transition-opacity hover:border-gray-400/20 hover:bg-[#252525]/10 hover:shadow-2xl'>
+                        <MemoryDonutChart metric={metric} />
+                    </div>
+                    <div />
+                </div>
             </div>
-            <div className='h-4xl mt-8 w-4xl rounded-md border bg-[#1A1A1A] p-6'>
-                <div className='text-xl text-cyan-400'>Memory Breakdown:</div>
-                <MemoryDonutChart metric={metric} />
-            </div>
-            <div className='mt-8 flex w-4xl flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
+            <div className='mt-8 flex w-full flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
                 <div className='text-xl text-cyan-400'>GPU Temperature Trend:</div>
                 <div className='text-sm text-gray-400'>Last hour data with real-time updates</div>
                 <div className='mt-4 flex gap-4'>
@@ -282,7 +301,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                         </Badge>
                     </button>
                 </div>
-                <div className='mt-2 h-100 w-full rounded-md border bg-black'>
+                <div className='mt-2 w-full rounded-md border bg-black'>
                     <div className='h-full w-full p-4'>
                         {isLoadingHistory ? (
                             <div className='flex h-full items-center justify-center text-gray-400'>

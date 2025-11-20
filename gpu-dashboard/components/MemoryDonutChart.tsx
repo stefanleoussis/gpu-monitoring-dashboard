@@ -22,9 +22,13 @@ export function MemoryDonutChart({ metric }: MemoryDonutChartProps) {
                 data={data}
                 value='value'
                 category='name'
-                colors={['gray', 'emerald']}
+                // variant='pie'
+                label='VRAM'
+                showLabel={true}
+                colors={['blue', 'pink']}
                 valueFormatter={value => `${(value / 1024).toFixed(1)} GB`}
             />
+
             <div className='mt-4 text-center' />
             <p className='text-sm text-gray-400'>
                 {(metric.memory_used / 1024).toFixed(1)} GB /

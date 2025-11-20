@@ -650,7 +650,7 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>((props, ref) 
                         hide={!showXAxis}
                         dataKey={index}
                         interval={startEndOnly ? 'preserveStartEnd' : intervalType}
-                        tick={{ transform: 'translate(0, 6)', fill: '#9CA3AF' }}
+                        tick={{ transform: 'translate(0, 6)', fill: '#6b7280' }}
                         ticks={
                             startEndOnly
                                 ? [data[0][index], data[data.length - 1][index]]
@@ -686,7 +686,7 @@ const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>((props, ref) 
                         tickLine={false}
                         type='number'
                         domain={yAxisDomain as AxisDomain}
-                        tick={{ transform: 'translate(-3, 0)', fill: '#9CA3AF' }}
+                        tick={{ transform: 'translate(-3, 0)', fill: '#6b7280' }}
                         fill=''
                         stroke=''
                         className={cn(

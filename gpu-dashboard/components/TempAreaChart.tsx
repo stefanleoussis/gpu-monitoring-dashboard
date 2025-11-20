@@ -42,6 +42,8 @@ export function TempAreaChart({ data, timeRange }: TempAreaChartProps) {
                 customTooltip={ChartTooltip}
                 yAxisWidth={40}
                 xAxisFormatter={formatXAxis}
+                tickGap={30}
+                legendPosition='left'
             />
         </div>
     );
