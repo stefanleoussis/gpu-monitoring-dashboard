@@ -206,7 +206,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                 <div className='flex w-full flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
                     <div className='text-xl text-cyan-400'>GPU Utilization Trend:</div>
                     <div className='text-sm text-gray-400'>
-                        Last hour data with real-time updates
+                        Compute activity • {selectedRange} view
                     </div>
                     <div className='mt-4 flex gap-4'>
                         <button
@@ -258,7 +258,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                 <div className='flex w-full flex-col justify-between gap-8 rounded-md border bg-[#1A1A1A] p-6'>
                     <div>
                         <div className='text-xl text-cyan-400'>Memory Breakdown:</div>
-                        <div className='mt-2 text-sm text-gray-400'>VRAM Memory Usage graphed</div>
+                        <div className='mt-2 text-sm text-gray-400'>Current VRAM allocation</div>
                     </div>
                     <div className='flex h-80 w-full items-center justify-center rounded-lg border bg-[#252525]/5 shadow-lg backdrop-blur-md transition-opacity hover:border-gray-400/20 hover:bg-[#252525]/10 hover:shadow-2xl'>
                         <MemoryDonutChart metric={metric} />
@@ -268,7 +268,9 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
             </div>
             <div className='mt-8 flex w-full flex-col gap-2 rounded-md border bg-[#1A1A1A] p-6'>
                 <div className='text-xl text-cyan-400'>GPU Temperature Trend:</div>
-                <div className='text-sm text-gray-400'>Last hour data with real-time updates</div>
+                <div className='text-sm text-gray-400'>
+                    Thermal performance • {selectedRange} view
+                </div>
                 <div className='mt-4 flex gap-4'>
                     <button
                         className='p-0 text-xs hover:text-white'
