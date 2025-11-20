@@ -10,6 +10,7 @@ import { UtilLineChart } from './UtilLineChart';
 import { TempAreaChart } from './TempAreaChart';
 import { MemoryDonutChart } from './MemoryDonutChart';
 import { SparkAreaChart } from './SparkChart';
+import { motion } from 'motion/react';
 
 interface Props {
     metric: GPUMetric;
@@ -61,7 +62,11 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
     };
 
     return (
-        <>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, ease: 'easeOut', delay: 0.8 }}
+        >
             <div className='mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 md:grid-rows-4 lg:grid-cols-[370px_1fr_1fr] lg:grid-rows-2'>
                 <div className='row-span-2 grid'>
                     <div className='flex h-80 w-full flex-col justify-between rounded-md border bg-[#1A1A1A] p-6'>
@@ -313,6 +318,6 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                     </div>
                 </div>
             </div>
-        </>
+        </motion.div>
     );
 }
