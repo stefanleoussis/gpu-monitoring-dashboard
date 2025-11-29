@@ -12,6 +12,8 @@ import { MemoryDonutChart } from './MemoryDonutChart';
 import { SparkAreaChart } from './SparkChart';
 import { motion } from 'motion/react';
 
+const GPU_STOPPED = process.env.NEXT_PUBLIC_GPU_STOPPED;
+
 interface Props {
     metric: GPUMetric;
     initialWorkloadStatus: WorkloadStatus;
@@ -95,23 +97,32 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                             </div>
                         </div>
                         <div className='flex justify-end'>
-                            <LiquidButton
-                                variant={workloadStatus.status === 'running' ? 'pause' : 'default'}
-                                onClick={handleWorkloadToggle}
-                                disabled={isLoading}
-                            >
-                                {isLoading ? (
-                                    'Loading...'
-                                ) : workloadStatus.status === 'running' ? (
-                                    <div className='flex items-center gap-2'>
-                                        Pause Workload <Pause />
-                                    </div>
-                                ) : (
-                                    <div className='flex items-center gap-2'>
-                                        Start Workload <Play />
-                                    </div>
-                                )}
-                            </LiquidButton>
+                            {GPU_STOPPED ? (
+                                <div className='justify-end rounded-lg bg-gray-800 p-4 text-xs text-gray-400'>
+                                    GPU paused. Displaying historical data. Contact
+                                    stefanleoussis@gmail.com for live demo.
+                                </div>
+                            ) : (
+                                <LiquidButton
+                                    variant={
+                                        workloadStatus.status === 'running' ? 'pause' : 'default'
+                                    }
+                                    onClick={handleWorkloadToggle}
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? (
+                                        'Loading...'
+                                    ) : workloadStatus.status === 'running' ? (
+                                        <div className='flex items-center gap-2'>
+                                            Pause Workload <Pause />
+                                        </div>
+                                    ) : (
+                                        <div className='flex items-center gap-2'>
+                                            Start Workload <Play />
+                                        </div>
+                                    )}
+                                </LiquidButton>
+                            )}
                         </div>
                     </div>
                 </div>

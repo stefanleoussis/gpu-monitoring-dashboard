@@ -55,21 +55,32 @@ app.get("/api/metrics/history", async (req: Request, res: Response) => {
   try {
     const range = (req.query.range as string) || "1h";
 
-    const now = new Date();
+    const latestRecord = await db
+      .collection("metrics")
+      .find()
+      .sort({ timestamp: -1 })
+      .limit(1)
+      .toArray();
+
+    if (latestRecord.length === 0) {
+      return res.json([]);
+    }
+
+    const latestTime = new Date(latestRecord[0].timestamp);
     let cutoffTime: Date;
 
     switch (range) {
       case "1h":
-        cutoffTime = new Date(now.getTime() - 60 * 60 * 1000);
+        cutoffTime = new Date(latestTime.getTime() - 60 * 60 * 1000);
         break;
       case "24h":
-        cutoffTime = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        cutoffTime = new Date(latestTime.getTime() - 24 * 60 * 60 * 1000);
         break;
       case "7d":
-        cutoffTime = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        cutoffTime = new Date(latestTime.getTime() - 7 * 24 * 60 * 60 * 1000);
         break;
       default:
-        cutoffTime = new Date(now.getTime() - 60 * 60 * 1000);
+        cutoffTime = new Date(latestTime.getTime() - 60 * 60 * 1000);
     }
 
     const history = await db
