@@ -134,7 +134,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-5xl font-bold'>{metric.utilization}%</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 h-20 w-20 overflow-hidden rounded-md border bg-[#252525] shadow-2xl sm:h-20 sm:w-30 md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['utilization']}
@@ -179,7 +179,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                                 <div className='text-5xl font-bold'>{metric.temperature}°C</div>
                             </div>
                         </div>
-                        <div className='mt-2 hidden h-20 w-30 overflow-hidden rounded-md border bg-[#252525] shadow-2xl md:block'>
+                        <div className='mt-2 h-20 w-20 overflow-hidden rounded-md border bg-[#252525] shadow-2xl sm:h-20 sm:w-30 md:block'>
                             <SparkAreaChart
                                 data={history}
                                 categories={['temperature']}
@@ -195,9 +195,7 @@ export default function Metrics({ metric, initialWorkloadStatus }: Props) {
                         <div>
                             <div className='text-xl text-cyan-400'>Power Draw:</div>
                             <div className='mt-3 flex items-baseline gap-2'>
-                                <div className='text-3xl font-bold md:text-5xl'>
-                                    {metric.power_draw}
-                                </div>
+                                <div className='text-5xl font-bold'>{metric.power_draw}</div>
                                 <div className='text-gray-400'>/ 450 W</div>
                             </div>
                         </div>

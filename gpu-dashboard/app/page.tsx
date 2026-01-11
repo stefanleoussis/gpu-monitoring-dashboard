@@ -29,17 +29,8 @@ export default async function Dashboard() {
     const initialWorkloadStatus = await getWorkloadStatus();
 
     return (
-        <div className='dark flex min-h-screen flex-col bg-black px-18 py-14 text-white'>
-            <div className='flex w-full flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-0'>
-                <div className='text-4xl font-bold'>GPU Monitoring Dashboard</div>
-                <Image
-                    src={TWLogo}
-                    alt='TensorWave Logo'
-                    width={60}
-                    height={60}
-                    className='rounded-full border p-3'
-                />
-            </div>
+        <div className='dark flex min-h-screen flex-col bg-black px-10 py-14 text-white sm:px-18'>
+            <div className='text-4xl font-bold'>GPU Monitoring Dashboard</div>
             <Client initialWorkloadStatus={initialWorkloadStatus} initialMetric={initialMetric} />
         </div>
     );
